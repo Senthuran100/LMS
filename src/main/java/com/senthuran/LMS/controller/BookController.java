@@ -38,6 +38,6 @@ public class BookController {
 
     @DeleteMapping("/book/{bookId}")
     public ResponseEntity<?> deleteBook(@PathVariable(value = "bookId") Integer bookId) throws ResourceNotFoundException {
-        return bookService.removeBook(bookId);
+        return new ResponseEntity<>(bookService.removeBook(bookId), HttpStatus.OK);
     }
 }

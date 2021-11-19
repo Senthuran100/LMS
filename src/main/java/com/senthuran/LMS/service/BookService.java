@@ -30,7 +30,7 @@ public class BookService {
     public Book updateBook(Integer bookId, Book bookRequest) throws ResourceNotFoundException {
         return bookRepository.findById(bookId).map(book -> {
             book.setName(bookRequest.getName());
-            book.setDescription(book.getDescription());
+            book.setDescription(bookRequest.getDescription());
             return bookRepository.save(book);
         }).orElseThrow(() -> new ResourceNotFoundException("Book Id Not Found" + bookId));
     }

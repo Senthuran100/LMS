@@ -20,6 +20,6 @@ public class Library {
 
     private String name;
 
-    @OneToMany()
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Book> books;
 }
