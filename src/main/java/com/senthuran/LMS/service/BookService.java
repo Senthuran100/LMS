@@ -32,13 +32,13 @@ public class BookService {
             book.setName(bookRequest.getName());
             book.setDescription(bookRequest.getDescription());
             return bookRepository.save(book);
-        }).orElseThrow(() -> new ResourceNotFoundException("Book Id Not Found" + bookId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Book Id Not Found " + bookId));
     }
 
     public ResponseEntity<?> removeBook(Integer bookId) throws ResourceNotFoundException {
         return bookRepository.findById(bookId).map(book -> {
             bookRepository.delete(book);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Book Id Not Found" + bookId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Book Id Not Found " + bookId));
     }
 }

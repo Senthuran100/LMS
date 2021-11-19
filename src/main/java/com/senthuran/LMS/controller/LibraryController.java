@@ -6,12 +6,15 @@ import com.senthuran.LMS.service.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+@Validated
 public class LibraryController {
 
     @Autowired
@@ -23,13 +26,13 @@ public class LibraryController {
     }
 
     @PostMapping("/library")
-    public ResponseEntity<Library> addLibrary(@RequestBody Library libraryReq) {
+    public ResponseEntity<Library> addLibrary(@Valid @RequestBody Library libraryReq) {
         Library library = libraryService.addLibrary(libraryReq);
         return new ResponseEntity<>(library, HttpStatus.OK);
     }
 
     @PutMapping("/library/{libraryId}")
-    public ResponseEntity<Library> updateLibrary(@PathVariable(value = "libraryId") Integer libraryId, @RequestBody Library libraryReq) throws ResourceNotFoundException {
+    public ResponseEntity<Library> updateLibrary(@PathVariable(value = "libraryId") Integer libraryId,@Valid @RequestBody Library libraryReq) throws ResourceNotFoundException {
         Library library = libraryService.updateLibrary(libraryId, libraryReq);
         return new ResponseEntity<>(library, HttpStatus.OK);
     }

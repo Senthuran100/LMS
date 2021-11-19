@@ -31,13 +31,13 @@ public class LibraryService {
             library.setName(libraryReq.getName());
             library.setBooks(libraryReq.getBooks());
             return libraryRepository.save(library);
-        }).orElseThrow(() -> new ResourceNotFoundException("Library Id Not Found" + libraryId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Library Id Not Found " + libraryId));
     }
 
     public ResponseEntity<?> removeLibrary(Integer libraryId) throws ResourceNotFoundException {
         return libraryRepository.findById(libraryId).map(library -> {
             libraryRepository.delete(library);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Book Id Not Found" + libraryId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Book Id Not Found " + libraryId));
     }
 }

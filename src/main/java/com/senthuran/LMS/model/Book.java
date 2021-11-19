@@ -12,11 +12,17 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 @Entity
+@Table(name = "book",
+        uniqueConstraints={
+                @UniqueConstraint(columnNames = "name")
+        }
+)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(unique=true)
     @NotNull
     private String name;
 
