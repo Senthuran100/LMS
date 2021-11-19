@@ -1,5 +1,6 @@
 package com.senthuran.LMS.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,9 +21,5 @@ public class Book {
     private String name;
 
     private String description;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "library_id")
-    private Library library;
 
 }

@@ -25,14 +25,19 @@ public class BookController {
     }
 
     @PutMapping("/book/{bookId}")
-    public ResponseEntity<Book> updateBook(@PathVariable(value = "instructorId") Integer bookId,
+    public ResponseEntity<Book> updateBook(@PathVariable(value = "bookId") Integer bookId,
                                            @Valid @RequestBody Book bookRequest) throws ResourceNotFoundException {
         Book book = bookService.updateBook(bookId, bookRequest);
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     @GetMapping("/books")
-    public List<Book> getBooks() {
-        return bookService.getAllBooks();
+    public ResponseEntity<List<Book>> getBooks() {
+        return new ResponseEntity<>(bookService.getAllBooks(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/book/{bookId}")
+    public ResponseEntity<?> deleteBook(@PathVariable(value = "bookId") Integer bookId) throws ResourceNotFoundException {
+        return bookService.removeBook(bookId);
     }
 }
