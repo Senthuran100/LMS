@@ -4,12 +4,15 @@ import com.senthuran.LMS.exception.ResourceNotFoundException;
 import com.senthuran.LMS.model.Library;
 import com.senthuran.LMS.repository.BookRepository;
 import com.senthuran.LMS.repository.LibraryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class LibraryService {
     @Autowired
@@ -22,6 +25,7 @@ public class LibraryService {
         return libraryRepository.findAll();
     }
 
+    @Transactional
     public Library addLibrary(Library libraryReq) {
         return libraryRepository.save(libraryReq);
     }

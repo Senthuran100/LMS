@@ -1,8 +1,10 @@
 package com.senthuran.LMS.controller;
 
+import com.senthuran.LMS.exception.RecordFoundException;
 import com.senthuran.LMS.exception.ResourceNotFoundException;
 import com.senthuran.LMS.model.Library;
 import com.senthuran.LMS.service.LibraryService;
+import com.senthuran.LMS.validator.LibraryRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,19 +22,25 @@ public class LibraryController {
     @Autowired
     private LibraryService libraryService;
 
+    @Autowired
+    private LibraryRequestValidator libraryRequestValidator;
+
     @GetMapping("/libraries")
     public ResponseEntity<List<Library>> getLibraries() {
         return new ResponseEntity<>(libraryService.getAllLibraries(), HttpStatus.OK);
     }
 
     @PostMapping("/library")
-    public ResponseEntity<Library> addLibrary(@Valid @RequestBody Library libraryReq) {
-        Library library = libraryService.addLibrary(libraryReq);
-        return new ResponseEntity<>(library, HttpStatus.OK);
+    public ResponseEntity<Library> addLibrary(@Valid @RequestBody Library libraryReq) throws RecordFoundException {
+        if (!libraryRequestValidator.validateLibraryCreateRequest(libraryReq)) {
+            Library library = libraryService.addLibrary(libraryReq);
+            return new ResponseEntity<>(library, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(libraryReq, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/library/{libraryId}")
-    public ResponseEntity<Library> updateLibrary(@PathVariable(value = "libraryId") Integer libraryId,@Valid @RequestBody Library libraryReq) throws ResourceNotFoundException {
+    public ResponseEntity<Library> updateLibrary(@PathVariable(value = "libraryId") Integer libraryId, @Valid @RequestBody Library libraryReq) throws ResourceNotFoundException {
         Library library = libraryService.updateLibrary(libraryId, libraryReq);
         return new ResponseEntity<>(library, HttpStatus.OK);
     }

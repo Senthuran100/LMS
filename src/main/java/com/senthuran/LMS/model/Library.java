@@ -28,7 +28,7 @@ public class Library {
     @NotNull
     private String name;
 
-    @NotEmpty
+    @NotNull
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Book> books;
 }
